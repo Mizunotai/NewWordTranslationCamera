@@ -1,0 +1,22 @@
+PODS:
+  - Alamofire (3.3.1)
+  - KYShutterButton (1.0.3)
+  - PhotoTweaks (1.0.2)
+  - SwiftyJSON (2.3.2)
+  - TesseractOCRiOS (4.0.0)
+
+DEPENDENCIES:
+  - Alamofire (~> 3.2)
+  - KYShutterButton
+  - PhotoTweaks (~> 1.0)
+  - SwiftyJSON (~> 2.3)
+  - TesseractOCRiOS (~> 4.0)
+
+SPEC CHECKSUMS:
+  Alamofire: 369bc67b6f5ac33ded3648d7bd21c5bfb91c2ecc
+  KYShutterButton: 2fc63b04f4471281728fd7536df5c1aaf2c56ae0
+  PhotoTweaks: e91ce097f9df435049e7c35d419f9a7749e252bc
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  TesseractOCRiOS: 90638afbe43d082433f2e76b384c7901d23956df
+
+COCOAPODS: 0.39.0
