@@ -8,6 +8,7 @@ target 'camera' do
 	pod 'Alamofire', '~> 3.2'
 	pod 'SwiftyJSON', '~> 2.3'
 	pod 'KYShutterButton'
+	pod 'SVProgressHUD'
 end
 
 target 'cameraTests' do

@@ -10,7 +10,7 @@ import UIKit
 import TesseractOCR
 import Alamofire
 import SwiftyJSON
-
+import SVProgressHUD
 
 class OCRViewController: UIViewController, UITableViewDelegate ,UITableViewDataSource ,G8TesseractDelegate   {
     
@@ -30,6 +30,7 @@ class OCRViewController: UIViewController, UITableViewDelegate ,UITableViewDataS
         
         self.table.dataSource = self
         self.table.delegate = self
+        SVProgressHUD.show()
         
         analyze()
         
@@ -45,7 +46,9 @@ class OCRViewController: UIViewController, UITableViewDelegate ,UITableViewDataS
             
             //            self.label.text = tesseract.recognizedText
             
+            
             print(tesseract.recognizedText)
+           
             
             self.getArticles(tesseract.recognizedText.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()))
         })
@@ -87,6 +90,7 @@ class OCRViewController: UIViewController, UITableViewDelegate ,UITableViewDataS
             }
             print(self.jsonDic)
             self.table.reloadData()
+            SVProgressHUD.dismiss()
         }
         
     }

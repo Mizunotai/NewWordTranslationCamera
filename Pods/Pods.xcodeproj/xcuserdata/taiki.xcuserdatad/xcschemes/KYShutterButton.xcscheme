@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '58A770DE014BF5260537D9D7'
+               BlueprintIdentifier = '180C8D6F861F20F892F6D437'
                BlueprintName = 'KYShutterButton'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'KYShutterButton.framework'>

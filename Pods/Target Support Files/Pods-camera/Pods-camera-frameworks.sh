@@ -87,6 +87,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-camera/Alamofire.framework"
   install_framework "Pods-camera/KYShutterButton.framework"
   install_framework "Pods-camera/PhotoTweaks.framework"
+  install_framework "Pods-camera/SVProgressHUD.framework"
   install_framework "Pods-camera/SwiftyJSON.framework"
   install_framework "Pods-camera/TesseractOCR.framework"
 fi
@@ -94,6 +95,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-camera/Alamofire.framework"
   install_framework "Pods-camera/KYShutterButton.framework"
   install_framework "Pods-camera/PhotoTweaks.framework"
+  install_framework "Pods-camera/SVProgressHUD.framework"
   install_framework "Pods-camera/SwiftyJSON.framework"
   install_framework "Pods-camera/TesseractOCR.framework"
 fi
