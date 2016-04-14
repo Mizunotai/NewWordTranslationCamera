@@ -48,9 +48,22 @@ class OCRViewController: UIViewController, UITableViewDelegate ,UITableViewDataS
             
             
             print(tesseract.recognizedText)
-           
             
-            self.getArticles(tesseract.recognizedText.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()))
+//            if G8Tesseract.recognizedText.lowercaseString.containsString("\n") { // -> true
+//                print("swiftが含まれる")
+//            }
+
+            let str = tesseract.recognizedText.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            
+            if str.localizedLowercaseString.containsString("\n"){
+                
+                SVProgressHUD.showErrorWithStatus("失敗")
+                self.dismissViewControllerAnimated(true, completion: nil)
+
+            }else{
+                self.getArticles(str)
+            }
+            
         })
     }
     
@@ -68,29 +81,29 @@ class OCRViewController: UIViewController, UITableViewDelegate ,UITableViewDataS
                 return
             }
             let json = JSON(object)
-            //           self.jsonDic.append(json["tuc"][1]["phrase"]["text"].string!)
-            ////            self.jsonDic = json["tuc"][1]["phrase"]["text"].string!
-            //            print(self.jsonDic)
-            let count = json["tuc"].count-1
-            //
-            print(count)
-            //            var str  : [String] = []
-            for i in 0...count {
-                //                print(json["tuc"][i]["phrase"]["text"].string)
-                if json["tuc"][i]["phrase"]["text"].string == nil{
-                   
-                    break
-                    
-                }else{
-                    self.jsonDic.append(json["tuc"][i]["phrase"]["text"].string!)
-                    
+            
+            
+            let count = json["tuc"].count
+            
+          
+                for i in 0...count {
+                    //                print(json["tuc"][i]["phrase"]["text"].string)
+                    if json["tuc"][i]["phrase"]["text"].string == nil{
+                        
+                        break
+                        
+                    }else{
+                        self.jsonDic.append(json["tuc"][i]["phrase"]["text"].string!)
+                        
+                    }
                 }
-            }
+            
             json.forEach { (_, json) in
             }
             print(self.jsonDic)
             self.table.reloadData()
             SVProgressHUD.dismiss()
+            
         }
         
     }
