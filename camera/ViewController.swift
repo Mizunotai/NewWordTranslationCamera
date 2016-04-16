@@ -27,7 +27,14 @@ class ViewController: UIViewController, PhotoTweaksViewControllerDelegate, UIIma
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
         //セッションの作成
         self.captureSession = AVCaptureSession()
         
@@ -67,35 +74,33 @@ class ViewController: UIViewController, PhotoTweaksViewControllerDelegate, UIIma
         //セッション開始
         captureSession.startRunning()
         
-        
-        
         let label = UILabel(frame: CGRectMake(0,self.view.bounds.height-100,2000,150))
         label.backgroundColor = UIColor.blackColor()
         self.view.addSubview(label)
-        // UIボタンを作成.
-        //        let myButton = UIButton(frame: CGRectMake(self.view.bounds.width/2 - 40,self.view.bounds.height-90,80,80))
+        
+        
+        // カメラのボタン
         let myButton = KYShutterButton(frame: CGRectMake(self.view.bounds.width/2 - 40,self.view.bounds.height-90,80,80),
                                        shutterType: .Normal,
                                        buttonColor: UIColor.redColor())
-        
         
         buttonsData(myButton, color:UIColor.redColor(),str: "",
                     cornerRadius: myButton.frame.size.width / 2,selector: #selector(ViewController.onClickMyButton(_:)))
         myButton.addTarget(self,
                            action:#selector(ViewController.onClickMyButton(_:)),
-                           forControlEvents: .TouchUpInside
-        )
+                           forControlEvents: .TouchUpInside)
         
+        //ライブラリへのボタン
         let libraryButton = UIButton(frame:CGRectMake(0, self.view.bounds.height-70, 120, 50))
         buttonsData(libraryButton,color: UIColor.clearColor(),  str: "ライブラリ",
                     cornerRadius: 0, selector: #selector(ViewController.onClickLibraryButton(_:)))
         
+        //履歴へのボタン
+        let goLogButton = UIButton(frame: CGRectMake(self.view.bounds.width-60,self.view.bounds.height-70,120,50))
+        buttonsData(goLogButton, color: UIColor.clearColor(), str: "履歴", cornerRadius: 0, selector: #selector(ViewController.resultLogs(_:)))
+        
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     func buttonsData(button: UIButton ,color:UIColor, str:String ,cornerRadius :CGFloat ,selector:Selector){
         
         button.backgroundColor =  color
@@ -104,6 +109,7 @@ class ViewController: UIViewController, PhotoTweaksViewControllerDelegate, UIIma
         button.layer.cornerRadius = cornerRadius
         button.addTarget(self, action:selector, forControlEvents: .TouchUpInside)
         self.view.addSubview(button)
+        
     }
     
     // ボタンイベント.
@@ -124,6 +130,11 @@ class ViewController: UIViewController, PhotoTweaksViewControllerDelegate, UIIma
         
         //        UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     }
+    
+    func resultLogs(sender: UIButton)  {
+        
+    }
+    
     /*タッチしたところにフォーカス*/
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let screenSize = view.bounds.size
@@ -190,26 +201,24 @@ class ViewController: UIViewController, PhotoTweaksViewControllerDelegate, UIIma
         self.presentViewController( targetViewController, animated: true, completion: nil)
         
         //        controller.navigationController?.popViewControllerAnimated(true)
-        
     }
-    
     func photoTweaksControllerDidCancel(controller: PhotoTweaksViewController!) {
         controller.navigationController?.popViewControllerAnimated(true)
     }
     
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        //        let viewController2 = segue.destinationViewController as! ImageEditingViewController
-        
-        if segue.identifier == "sugue"{
-            //遷移先のインスタンスをsegueから取り出す
-            let viewController2 = segue.destinationViewController as! OCRViewController
-            
-            //ここでいろいろ処理みたいなことをする
-            viewController2.image = self.Image
-            
-        }
-    }
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        //        let viewController2 = segue.destinationViewController as! ImageEditingViewController
+//        
+//        if segue.identifier == "segue"{
+//            //遷移先のインスタンスをsegueから取り出す
+//            let viewController2 = segue.destinationViewController as! OCRViewController
+//            
+//            //ここでいろいろ処理みたいなことをする
+//            viewController2.image = self.Image
+//            
+//        }
+//    }
     
 }
 

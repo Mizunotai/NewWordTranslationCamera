@@ -21,6 +21,7 @@ class OCRViewController: UIViewController, UITableViewDelegate ,UITableViewDataS
     var image :UIImage!
     var jsonDic : [String] = []
     
+    let defaults = NSUserDefaults.standardUserDefaults()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +33,7 @@ class OCRViewController: UIViewController, UITableViewDelegate ,UITableViewDataS
         self.table.delegate = self
         SVProgressHUD.show()
         
-        analyze()
+        self.analyze()
         
         
     }
@@ -49,18 +50,20 @@ class OCRViewController: UIViewController, UITableViewDelegate ,UITableViewDataS
             
             print(tesseract.recognizedText)
             
-//            if G8Tesseract.recognizedText.lowercaseString.containsString("\n") { // -> true
-//                print("swiftが含まれる")
-//            }
-
+            
+            //            if G8Tesseract.recognizedText.lowercaseString.containsString("\n") { // -> true
+            //                print("swiftが含まれる")
+            //            }
+            
             let str = tesseract.recognizedText.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
             
             if str.localizedLowercaseString.containsString("\n"){
-                
                 SVProgressHUD.showErrorWithStatus("失敗")
                 self.dismissViewControllerAnimated(true, completion: nil)
-
+                
             }else{
+                self.defaults.setObject(str, forKey: "name")
+                self.defaults.synchronize()
                 self.getArticles(str)
             }
             
@@ -85,34 +88,42 @@ class OCRViewController: UIViewController, UITableViewDelegate ,UITableViewDataS
             
             let count = json["tuc"].count
             
-          
-                for i in 0...count {
-                    //                print(json["tuc"][i]["phrase"]["text"].string)
-                    if json["tuc"][i]["phrase"]["text"].string == nil{
-                        
-                        break
-                        
-                    }else{
-                        self.jsonDic.append(json["tuc"][i]["phrase"]["text"].string!)
-                        
-                    }
+            //            if json["tuc"].string != nil {
+            for i in 0...count {
+                //                print(json["tuc"][i]["phrase"]["text"].string)
+                if json["tuc"][i]["phrase"]["text"].string == nil{
+                    break
+                }else{
+                    self.jsonDic.append(json["tuc"][i]["phrase"]["text"].string!)
                 }
-            
+            }
+            //            }else{
+            //                SVProgressHUD.showErrorWithStatus("失敗")
+            //                self.dismissViewControllerAnimated(true, completion: nil)
+            //
+            //            }
             json.forEach { (_, json) in
             }
+            let check = self.jsonDic.isEmpty
+            
+            if check {
+                
+            }else{
+                self.defaults.setObject(self.jsonDic, forKey: "data")
+                self.defaults.synchronize()
+            }
+            
+            
             print(self.jsonDic)
             self.table.reloadData()
             SVProgressHUD.dismiss()
-            
+           
         }
-        
     }
     
     //    Table Viewのセルの数を指定
     func tableView(table: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.jsonDic.count
-        
-        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -130,7 +141,6 @@ class OCRViewController: UIViewController, UITableViewDelegate ,UITableViewDataS
     func shouldCancelImageRecognitionForTesseract(tesseract: G8Tesseract!) -> Bool {
         return false; // return true if you need to interrupt tesseract before it finishes
     }
-    
     
     
     
